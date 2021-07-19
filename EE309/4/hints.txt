@@ -1,0 +1,64 @@
+You are allowed to use pseudo-instructions.
+(Without these, it might be too laborious
+particularly for loading addresses to
+initialize pointer.
+
+Psudo-instruction la loads the address of
+some label into a register.
+
+-> Labels are case sensitive in qtspim.
+
+-> Qtspim emulates a MIPS processor using
+Little Endian convention for multi-byte data!
+
+-> Notice that the port address has been
+changed to space within the data segment
+to avoid clashes with qtspim internal
+memory allocation.
+
+My data segment is as follows -- you need not
+use the same arrangement, of course.
+
+Labels AnyKey etc. must match the ones used
+in your program exactly.
+
+.data
+TestTab: .word AnyKey, TheKey
+ActTab:  .word DoNothing, FindKey, ReportKey
+Cur_St:		.byte 0x00
+Key_Code:	.byte 0x7E
+Key_Buffer:	.space 16
+In_Dest:	.byte 0
+Out_From:	.byte 0
+Periph:		.space 4
+# State Diagram Data
+Test_No:	.byte ...  ...  ...  ...
+Yes_Act:	.byte ...  ...  ...  ...
+No_Act:		.byte ...  ...  ...  ...
+Yes_Next:	.byte ...  ...  ...  ...
+No_Next:	.byte ...  ...  ...  ...
+	.text
+	.globl main
+main:
+
+Please put a nop after every branch and call instr.
+This has to do with the pipelined design of MIPS.
+You may get away without doing so during emulation,
+but a real pipelined processor may run into
+problems if you don't. (see the lecture on Apr. 12).
+
+You should test your program by single stepping.
+You can put breakpoints by right clicking on
+instructions. You can modify register/memory
+contents by right clicking on them.
+
+Run through all state transistions  by modifying
+the byte read from PortAddr to what you would
+expect from a pressed/not pressed key.
+This is what you will demonstrate to TAs when
+the assignment is checked.
+
+
+
+Links have been put on moodle site for excellent
+tutorials on qtspim and MIPS assembly programming.

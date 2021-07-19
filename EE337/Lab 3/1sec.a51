@@ -1,0 +1,12 @@
+ORG 0
+	MOV R7, #0
+	MOV R7, #222
+	LOOP1:
+	    MOV R6, #114
+		LOOP2:
+			MOV R5, #38
+			LOOP3:	
+			DJNZ R5, LOOP3
+		DJNZ R6, LOOP2
+	DJNZ R7, LOOP1
+END	

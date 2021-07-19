@@ -1,0 +1,111 @@
+ORG 0H
+
+MOV A, #0
+MOV R0, #0
+MOV R1, #0
+MOV R2, #0
+MOV R3, #0
+CLR PSW.1
+CLR PSW.5
+CLR P1.0
+CLR P1.1
+CLR P1.2
+CLR P1.3
+CLR P1.4
+CLR P1.5
+CLR P1.6
+CLR P1.7
+
+START:
+
+    CHECKP10:
+    	JNB P1.0, P10isZERO
+    	JB P1.4, P10Cases
+    	CJNE R0, #0, P10Cases
+    	SETB P1.4
+    	P10Cases:
+	    	JB PSW.1, P10OFF3s
+
+		    CJNE R0, #1, ENDCHECKP10
+		    CLR P1.4
+		    SETB PSW.1
+		    
+		    P10OFF3s:
+	    	CJNE R0, #4, ENDCHECKP10
+			SETB P1.4
+			CLR PSW.1
+			MOV R0, #0
+		SJMP ENDCHECKP10
+
+	    P10isZERO:
+	    	CLR P1.4
+	    	CLR PSW.1
+	    	MOV R0, #0
+
+    ENDCHECKP10:
+	
+	CHECKP11:
+    	JNB P1.1, P11isZERO
+    	JB P1.6, P11Cases
+    	CJNE R1, #0, P11Cases
+    	SETB P1.6
+    	P11Cases:
+	    	JB PSW.5, P11OFF2s
+
+		    CJNE R1, #2, ENDCHECKP11
+		    CLR P1.6
+		    SETB PSW.5
+		    
+		    P11OFF2s:
+	    	CJNE R1, #4, ENDCHECKP11
+			SETB P1.6
+			CLR PSW.5
+			MOV R1, #0
+		SJMP ENDCHECKP11
+
+	    P11isZERO:
+	    	CLR P1.6
+	    	CLR PSW.5
+	    	MOV R1, #0
+	
+	ENDCHECKP11:
+	
+	JB PSW.1, INCR0
+	JB P1.4, INCR0
+	SJMP EndP10TimeCounter
+	INCR0:
+	INC R0
+	MOV A, R0
+	MOV B, #5
+	DIV AB
+	MOV R0, B
+	CJNE R0, #0, EndP10TimeCounter
+	INC R0
+	EndP10TimeCounter:
+
+	JB PSW.5, INCR1
+	JB P1.6, INCR1
+	SJMP EndP11TimeCounter
+	INCR1:
+	INC R1
+	MOV A, R1
+	MOV B, #5
+	DIV AB
+	MOV R1, B
+	CJNE R1, #0, EndP11TimeCounter
+	INC R1
+	EndP11TimeCounter:
+
+	MOV R7, #100
+	LOOP1:
+	    MOV R6, #100
+		LOOP2:
+			MOV R5, #99
+			LOOP3:	
+			DJNZ R5, LOOP3
+		DJNZ R6, LOOP2
+	DJNZ R7, LOOP1
+
+LJMP START
+
+END
