@@ -1,5 +1,5 @@
 ## Tennis Scoreboard Simulator
-<p align="center"><img width="50%" src="tennis-scordboard-simulator.png" alt="Tennis Scoreboard Simulator" /></p>
+<p align="center"><img width="50%" src="tennis-scoreboard-simulator-screen.png" alt="Tennis Scoreboard Simulator" /></p>
 
 I have made few additions to the problem statement.
 I feel that these additions doens't change or add any logic/features that are not required.
